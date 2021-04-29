@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@house) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :address %>
+    <%= f.input :exterior_color %>
+    <%= f.input :interior_color %>
+    <%= f.input :current_family_last_name %>
+    <%= f.input :rooms %>
+    <%= f.input :square_feet %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
