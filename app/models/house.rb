@@ -13,8 +13,8 @@ class House < ApplicationRecord
 	end
 
 	with_options if: -> { required_for_step?(:house_info) } do
-	 validates :interior_color, presence: true
-	 validates :exterior_color, presence: true
+	 validates :interior_color, length: { minimum: 2, maximum: 50}
+	 # validates :exterior_color, presence: true
 	end
 
 	with_options if: -> { required_for_step?(:house_stats) } do
