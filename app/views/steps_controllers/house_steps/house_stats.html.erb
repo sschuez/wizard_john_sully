@@ -1,28 +1,33 @@
-<%= form_with model: @house, url: wizard_path do |f| %>
-  <% if f.object.errors.any? %>
-    <div class="error_messages">
-      <% f.object.errors.full_messages.each do |error| %>
-        <p><%= error %></p>
-      <% end %>
-    </div>
+<%= turbo_frame_tag dom_id(@house) do %>
+
+  <%= form_with model: @house, url: wizard_path, data: { turbo_frame: :_top } do |f| %>
+  <%#= form_with model: @house, url: wizard_path do |f| %>
+    <% if f.object.errors.any? %>
+      <div class="error_messages">
+        <% f.object.errors.full_messages.each do |error| %>
+          <p><%= error %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <fieldset>
+      <legend>House Stats</legend>
+
+      <div>
+        <%= f.label :rooms %>
+        <%= f.text_field :rooms %>
+      </div>
+
+      <div>
+        <%= f.label :square_feet %>
+        <%= f.text_field :square_feet %>
+      </div>
+
+      <div>
+        <%= @house.address == 'green' ? (link_to 'Previous Step', wizard_path(:house_info)) : (link_to 'Previous Step', previous_wizard_path) %>
+        <%= f.submit 'Complete' %>
+      </div>
+    </fieldset>
   <% end %>
 
-  <fieldset>
-    <legend>House Info</legend>
-
-    <div>
-      <%= f.label :rooms %>
-      <%= f.text_field :rooms %>
-    </div>
-
-    <div>
-      <%= f.label :square_feet %>
-      <%= f.text_field :square_feet %>
-    </div>
-
-    <div>
-      <%= link_to 'Previous Step', previous_wizard_path %>
-      <%= f.submit 'Complete' %>
-    </div>
-  </fieldset>
 <% end %>

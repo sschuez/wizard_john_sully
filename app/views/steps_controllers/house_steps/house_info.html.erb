@@ -1,29 +1,40 @@
-<%= form_with model: @house, url: wizard_path do |f| %>
-  <% if f.object.errors.any? %>
-    <div class="error_messages">
-      <% f.object.errors.full_messages.each do |error| %>
-        <p><%= error %></p>
+<%= turbo_frame_tag dom_id(@house) do %>
+
+  <%= form_with model: @house, url: wizard_path do |f| %>
+    <% if f.object.errors.any? %>
+      <div class="error_messages">
+        <% f.object.errors.full_messages.each do |error| %>
+          <p><%= error %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <fieldset>
+      <legend>House Info</legend>
+
+      <% if @house.address != 'green' %>
+        <div>
+          <%= f.label :interior_color %>
+          <%= f.text_field :interior_color %>
+        </div>
+      <% else %>
+        <div>
+          <p>Weird shit</p>
+        </div>
       <% end %>
-    </div>
+
+      <div>
+        <%= f.label :exterior_color %>
+        <%= f.text_field :exterior_color %>
+      </div>
+
+      <div>
+        <%= link_to 'Previous Step', previous_wizard_path %>
+        <%= @house.address == 'green' ? (link_to 'Next Step', wizard_path(:house_stats)) : (f.submit 'Next Step') %>
+        <%= link_to 'Skip', next_wizard_path %>
+      </div>
+
+    </fieldset>
   <% end %>
 
-  <fieldset>
-    <legend>House Info</legend>
-
-    <div>
-      <%= f.label :interior_color %>
-      <%= f.text_field :interior_color %>
-    </div>
-
-    <div>
-      <%= f.label :exterior_color %>
-      <%= f.text_field :exterior_color %>
-    </div>
-
-    <div>
-      <%= link_to 'Previous Step', previous_wizard_path %>
-      <%= f.submit 'Next Step' %>
-      <%= link_to 'Skip', next_wizard_path %>
-    </div>
-  </fieldset>
 <% end %>

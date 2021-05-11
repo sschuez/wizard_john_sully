@@ -12,7 +12,7 @@ class HousesController < ApplicationController
 
   # GET /houses/new
   def new
-    @house = House.new
+    @house = House.new wizard_complete: false
     @house.user = current_user
     @house.save! validate: false
     redirect_to house_step_path(@house, House.form_steps.keys.first)

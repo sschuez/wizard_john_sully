@@ -1,28 +1,32 @@
-<%= form_with model: @house, url: wizard_path do |f| %>
-  <% if f.object.errors.any? %>
-    <div class="error_messages">
-      <% f.object.errors.full_messages.each do |error| %>
-        <p><%= error %></p>
-      <% end %>
-    </div>
+<%= turbo_frame_tag dom_id(@house) do %>
+
+  <%= form_with model: @house, url: wizard_path do |f| %>
+    <% if f.object.errors.any? %>
+      <div class="error_messages">
+        <% f.object.errors.full_messages.each do |error| %>
+          <p><%= error %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <fieldset>
+      <legend>Address Info</legend>
+
+      <div>
+        <%= f.label :address %>
+        <%= f.text_field :address %>
+      </div>
+
+      <div>
+        <%= f.label :current_family_last_name %>
+        <%= f.text_field :current_family_last_name %>
+      </div>
+
+      <div>
+        <%#= link_to 'Nevermind', root_path %>
+        <%= f.submit 'Next Step' %>
+      </div>
+    </fieldset>
   <% end %>
 
-  <fieldset>
-    <legend>Address Info</legend>
-
-    <div>
-      <%= f.label :address %>
-      <%= f.text_field :address %>
-    </div>
-
-    <div>
-      <%= f.label :current_family_last_name %>
-      <%= f.text_field :current_family_last_name %>
-    </div>
-
-    <div>
-      <%#= link_to 'Nevermind', users_path %>
-      <%= f.submit 'Next Step' %>
-    </div>
-  </fieldset>
 <% end %>
